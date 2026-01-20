@@ -17,7 +17,7 @@ test("trying navigation", async ({ page }) => {
   await page.fill("input[name='name']", "TestUser");
   await page.fill("input[data-qa='signup-email']", "testuser@example.com");
   // 7. Click 'Signup' button
-  await page.click("butto[data-qa='signup-button']");
+  await page.click("button[data-qa='signup-button']");
   // 8. Verify that 'ENTER ACCOUNT INFORMATION' is visible
   // 9. Fill details: Title, Name, Email, Password, Date of birth
   // 10. Select checkbox 'Sign up for our newsletter!'
