@@ -2,6 +2,12 @@ import { test, expect } from "@playwright/test";
 
 test.describe("User Registration Flow", () => {
   test("Complete user registration and deletion", async ({ page }) => {
+    const testUser = {
+      email: "Priyanshu@playwright.com",
+      password: "TestPassword123!",
+      name: "Playwright User",
+    };
+
     // 1. Launch browser (handled by Playwright)
     // 2. Navigate to URL
     await page.goto("http://automationexercise.com");
@@ -19,11 +25,9 @@ test.describe("User Registration Flow", () => {
     await expect(newUserSignup).toBeVisible();
 
     // 6. Enter name and email address
-    const testName = "John Doe";
-    const testEmail = `testuser${Date.now()}@example.com`; // Unique email
 
-    await page.locator('input[data-qa="signup-name"]').fill(testName);
-    await page.locator('input[data-qa="signup-email"]').fill(testEmail);
+    await page.locator('input[data-qa="signup-name"]').fill(testUser.name);
+    await page.locator('input[data-qa="signup-email"]').fill(testUser.email);
 
     // 7. Click 'Signup' button
     await page.locator('button[data-qa="signup-button"]').click();
@@ -39,7 +43,7 @@ test.describe("User Registration Flow", () => {
     await page.locator("#id_gender1").check();
 
     // Password
-    await page.locator('input[data-qa="password"]').fill("TestPassword123!");
+    await page.locator('input[data-qa="password"]').fill(testUser.password);
 
     // Date of birth
     await page.locator('select[data-qa="days"]').selectOption("15");
@@ -53,8 +57,8 @@ test.describe("User Registration Flow", () => {
     await page.locator("#optin").check();
 
     // 12. Fill details: First name, Last name, Company, Address, etc.
-    await page.locator('input[data-qa="first_name"]').fill("John");
-    await page.locator('input[data-qa="last_name"]').fill("Doe");
+    await page.locator('input[data-qa="first_name"]').fill("Playwright");
+    await page.locator('input[data-qa="last_name"]').fill("User");
     await page.locator('input[data-qa="company"]').fill("Test Company Inc");
     await page.locator('input[data-qa="address"]').fill("123 Main Street");
     await page.locator('input[data-qa="address2"]').fill("Apt 4B");
@@ -84,7 +88,7 @@ test.describe("User Registration Flow", () => {
     // 16. Verify that 'Logged in as username' is visible
     const loggedInUser = page.locator('a:has-text("Logged in as")');
     await expect(loggedInUser).toBeVisible();
-    await expect(loggedInUser).toContainText(testName);
+    await expect(loggedInUser).toContainText(testUser.name);
 
     // 17. Click 'Delete Account' button
     await page.getByRole("link", { name: "Delete Account" }).click();
